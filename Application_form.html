@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVMQYJNNRJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZVMQYJNNRJ');
+</script>
+<meta charset="UTF-8">
+    <meta name="description" content="Bio-silicon Labs - Advanced Bioinformatics & Software Solutions">
+    <meta name="keywords" content="Bioinformatics, AI, Data Science, Genomics">
+    <meta name="author" content="Bio-silicon Labs">
+
+    <title>Bio-Silicon Labs</title>
+
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="images/site.webmanifest">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --holo-color: rgba(0, 255, 255, 0.6);
+  --bg-dark: #0a0f1c;
+}
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: var(--bg-dark);
+  overflow-x: hidden;
+  color: #fff;
+}
+
+/* === Navigation Bar === */
+nav.navbar {
+  background: rgba(0, 31, 63, 0.95);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 15px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+nav.navbar .nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+nav.navbar .logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  color: cyan;
+  text-shadow: 0 0 8px cyan;
+  text-decoration: none;
+}
+nav.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 30px;
+}
+nav.navbar ul li a {
+  color: #aefaff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+nav.navbar ul li a:hover {
+  color: cyan;
+  text-shadow: 0 0 10px cyan;
+  transform: translateY(-2px);
+}
+
+/* === Holographic Background === */
+.holo-bg {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(0,255,255,0.05) 0%, transparent 70%),
+              linear-gradient(45deg, rgba(0,255,255,0.05), rgba(255,0,255,0.05));
+  overflow: hidden;
+  z-index: -1;
+}
+.holo-bg::before, .holo-bg::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(from 0deg, rgba(0,255,255,0.1), rgba(255,0,255,0.1), transparent);
+  animation: spin 20s linear infinite;
+}
+.holo-bg::after {
+  animation-duration: 40s;
+  opacity: 0.5;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* === Form Container === */
+.form-container {
+  max-width: 750px;
+  margin: 6vh auto;
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 25px rgba(0,255,255,0.2);
+  transition: transform 0.2s ease;
+  perspective: 1000px;
+}
+.form-container:hover {
+  transform: translateY(-5px);
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  text-align: center;
+  color: cyan;
+  text-shadow: 0 0 10px cyan;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  color: #aefaff;
+  font-size: 0.9rem;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  color: cyan;
+  border: 1px solid rgba(0,255,255,0.3);
+  background: rgba(255,255,255,0.08);
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: cyan;
+  box-shadow: 0 0 10px cyan;
+}
+
+select option {
+  background: rgba(10,15,28,0.9);
+  color: cyan;
+}
+button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, cyan, #00ffff80);
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px cyan;
+}
+
+/* === AI Processing Animation === */
+#ai-loader {
+  display: none;
+  text-align: center;
+  margin-top: 1rem;
+  color: cyan;
+  animation: flicker 1.5s infinite alternate;
+}
+@keyframes flicker {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+/* === Success Overlay === */
+#success-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,255,255,0.15);
+  backdrop-filter: blur(15px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: cyan;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  text-shadow: 0 0 15px cyan;
+  z-index: 999;
+  animation: fadeIn 1s forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* === 3D cursor tilt === */
+.form-container {
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease;
+}
+
+/* === Hero / Header Section === */
+.hero {
+  background: linear-gradient(to right, #001f3f, #0074D9);
+  color: white;
+  padding: 180px 20px 100px; /* Adjusted for navbar */
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.hero h4 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  color: #cce7ff;
+}
+
+/* Sections below hero */
+section {
+  padding: 60px 20px;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #001f3f;
+  margin-bottom: 30px;
+}
+
+.immersive-section {
+  background: linear-gradient(to right, #f0f2f5, pink);
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin-bottom: 50px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.immersive-section h2 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.immersive-section p {
+  font-size: 1.1rem;
+  color: #34495e;
+  line-height: 1.7;
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">Bio-Silicon Labs</a>
+    <ul>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="achievements.html">R&D</a></li>
+      <li><a href="about.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Welcome to Bio-Silicon Labs</h1>
+  <h4>Where Biology meets Silicon Innovations. <br>Focusing on the fusion of biotechnology, silicon technology, AI, NGS, and more...</h4>
+</section>
+
+<div class="holo-bg"></div>
+<div class="form-container" id="formBox">
+  <h1>Bioinformatics Services Application Form</h1>
+<img src="images/BSL-post.png" class="card-img-top img-pop" alt="post" style="max-width: auto;">
+  <form id="contact-form">
+    <label for="name">Full Name</label>
+    <input id="name" name="name" type="text" placeholder="Enter your name" required>
+
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" placeholder="Enter your email" required>
+
+    <label for="phone">Phone</label>
+    <input id="phone" name="phone" type="tel" placeholder="Enter your number" required>
+
+    <label for="category">Application Category</label>
+    <select id="category" name="category" required >
+      <option value="">-- Select Category --</option>
+      <option value="consultancy">Bioinformatics Consultancy</option>
+      <option value="project">Project Support</option>
+      <option value="ngs">NGS & Drug Discovery Workflow</option>
+      <option value="bigdata">Big Data & AI model/GenAI Development</option>
+      <option value="pipeline">Pipeline Automation & Docker Container Deployment</option>
+      <option value="internship">Internships</option>
+    </select>
+
+    <div id="dynamic-section"></div>
+    <div id="topics-section"></div>
+    <div id="internship-section"></div>
+    <div id="consultancy-section"></div>
+    <div id="project-section"></div>
+
+    <label for="query">Additional Details</label>
+    <textarea id="query" name="query" rows="4" placeholder="Describe your query or project..."></textarea>
+
+    <button type="submit">Submit Application</button>
+    <div id="ai-loader"> Processing your request ...</div>
+  </form>
+
+</div>
+
+
+
+<div id="success-overlay">
+  ✅ Application Sent Successfully!  
+  <br>Bio-Silicon Labs has received your request.
+  <br>Will connect soon.
+</div>
+
+<div class="holo-bg"></div>
+<div class="form-container" id="formBox">
+<!-- === Donation Section === -->
+<!-- === Donation Section === -->
+<section class="immersive-section" id="donation-section">
+  <h2>Support Our Work</h2>
+  <p>
+    At Bio-Silicon Labs, we bridge the gap between biology and cutting-edge AI technology. 
+    Our <b>work and guidance</b> in <strong>NGS, Drug Discovery, AI & Big Data</strong> transforms scientific data into actionable insights, <b>accelerating research worldwide</b>. 
+    You can help us make a difference.
+  </p>
+  <p>
+    Every contribution directly supports:
+    <ul style="margin-top:20px; color:purple; font-size:0.95rem;">
+      <li>Processing complex genomic datasets. Helped many institutes, universities, companies.</li>
+      <li>Developing AI models for personalized medicine(Working on PRS automation)</li>
+      <li>Providing internships and hands-on research opportunities.<b>Already got fruitful outcomes</b></li>
+      <li>Building automated pipelines and open-source bioinformatics tools</li>
+    </ul>
+  </p>
+
+  <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center; margin-top:20px;">
+    <button onclick="donate('500')">$500 – Support atleast 1 Genomic Dataset</button>
+    <button onclick="donate('2000')">$2000 – Sponsor Internship Project</button>
+    <button onclick="donate('5000')">$5000 – Fuel AI Model Development</button>
+    <button onclick="donate('50000')">Custom Amount - If you found us Effective enough</button>
+  </div>
+
+  <p style="margin-top:20px; text-align:center; color:purple; font-size:0.95rem;">
+    <b>Your donation is secure via PayPal and will be used entirely for advancing scientific research and education.  
+    Join us in shaping the future of bioinformatics and AI-driven discovery.</b>
+  </p>
+</section>
+<script>
+// === Donation Button Handler via PayPal ===
+function donate(amount){
+  let paypalURL = "https://www.paypal.me/sciabhinandan/";
+  
+  if(amount === 'custom'){
+    amount = prompt("Enter donation amount in $:");
+    if(!amount) return;
+  }
+
+  // Open PayPal.me link with amount parameter
+  // PayPal expects amount in format: ?amount=123.45
+  let url = paypalURL + encodeURIComponent(amount);
+  window.open(url, "_blank");
+}
+</script>
+
+<style>
+/* Enhanced button styling for futuristic glow */
+#donation-section button {
+  padding: 14px 22px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.05rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, cyan, #00ffff80);
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 0 8px cyan;
+}
+#donation-section button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px cyan, 0 0 40px #00ffff50;
+}
+</style>
+
+  <button id="upiButton">Pay via UPI</button>
+  <div id="upiPopup" class="popup-overlay">
+  <div class="popup-content">
+    <span id="closePopup">&times;</span>
+    <h3>Scan to Pay via UPI</h3>
+    <img src="images/upi_qr.png" alt="UPI QR Code">
+    <p>Or use your UPI app to pay directly to <strong>+91 8802273055</strong></p>
+  </div>
+</div>
+<style>/* === UPI Popup Overlay === */
+.popup-overlay {
+  display: none; /* hidden by default */
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.popup-content {
+  background: rgba(0,0,0,0.9);
+  padding: 30px 20px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 350px;
+  color: cyan;
+  box-shadow: 0 0 25px cyan;
+  animation: popupIn 0.3s ease forwards;
+}
+
+.popup-content img {
+  width: 200px;
+  max-width: 80%;
+  margin: 15px 0;
+  border-radius: 12px;
+  box-shadow: 0 0 20px cyan;
+}
+
+.popup-content h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.popup-content p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #aefaff;
+}
+
+/* Close button */
+#closePopup {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: cyan;
+}
+
+/* Popup animation */
+@keyframes popupIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style><script>
+const upiButton = document.getElementById('upiButton');
+const upiPopup = document.getElementById('upiPopup');
+const closePopup = document.getElementById('closePopup');
+
+upiButton.addEventListener('click', () => {
+  upiPopup.style.display = 'flex';
+});
+
+closePopup.addEventListener('click', () => {
+  upiPopup.style.display = 'none';
+});
+
+// Close when clicking outside content
+upiPopup.addEventListener('click', (e) => {
+  if(e.target === upiPopup) upiPopup.style.display = 'none';
+});
+</script>
+
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+emailjs.init("N_rXPDHIkmbZAPF6j");
+
+// === Dynamic Section Changes ===
+const category = document.getElementById("category");
+const dynamic = document.getElementById("dynamic-section");
+
+const sections = {
+  consultancy: `
+    <label>Area of Expertise</label>
+    <input type="text" name="expertise" placeholder="e.g. Transcriptomics, Proteomics, etc.">
+    <label>Preferred Consultation Duration</label>
+    <input type="text" name="duration" placeholder="e.g. 2 hours session">
+  `,
+  ngs: `
+    <label>NGS Project Type</label>
+    <input type="text" name="ngs_type" placeholder="RNA-Seq, WGS, etc.">
+    <label>Drug Discovery Stage</label>
+    <input type="text" name="stage" placeholder="Target ID, Screening, Docking, etc.">
+  `,
+  bigdata: `
+    <label>AI Model Interest</label>
+    <input type="text" name="ai_interest" placeholder="e.g. GenAI, Multiomics AI, etc.">
+    <label>Data Volume</label>
+    <input type="text" name="data_volume" placeholder="e.g. 500GB, 2TB, etc.">
+  `,
+  project: `
+    <label>Project Title</label>
+    <input type="text" name="project_title" placeholder="Enter your project name">
+    <label>Specific Support Needed</label>
+    <textarea name="support" rows="3" placeholder="Describe the assistance you need"></textarea>
+  `,
+  pipeline: `
+    <label>Pipeline Purpose</label>
+    <input type="text" name="pipeline_purpose" placeholder="NGS, Proteomics, etc.">
+    <label>Deployment Preference</label>
+    <input type="text" name="deployment" placeholder="Docker, Singularity, Cloud, etc.">
+  `,
+  internship: `
+    <label>Internship Area of Interest</label>
+    <input type="text" name="interest" placeholder="Bioinformatics, ML for Genomics, etc.">
+    <label>Duration</label>
+    <input type="text" name="intern_duration" placeholder="e.g. 2 months">
+  `
+};
+
+category.addEventListener("change", e => {
+  dynamic.innerHTML = sections[e.target.value] || "";
+});
+
+// === Form Submission with Animation ===
+document.getElementById("contact-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const loader = document.getElementById("ai-loader");
+  loader.style.display = "block";
+
+  emailjs.sendForm("service_cxfo2v8", "template_4mstn1h", this)
+    .then(() => {
+      loader.style.display = "none";
+      document.getElementById("success-overlay").style.display = "flex";
+      setTimeout(() => {
+        document.getElementById("success-overlay").style.display = "none";
+        document.getElementById("contact-form").reset();
+      }, 3500);
+    })
+    .catch(() => {
+      loader.style.display = "none";
+      alert("⚠️ Failed to send application. Try again.");
+    });
+});
+
+// === 3D Tilt Effect ===
+const formBox = document.getElementById("formBox");
+document.addEventListener("mousemove", e => {
+  const x = (window.innerWidth / 2 - e.pageX) / 40;
+  const y = (window.innerHeight / 2 - e.pageY) / 40;
+  formBox.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+});
+
+const categoryDetails = {
+  consultancy: {
+    topics: [
+      "NGS",
+      "Docking & Simulations",
+      "Programming Languages: Python, Java, R, Perl, Shell Scripting",
+      "Database Development",
+      "Big data/High-throughput Analytics",
+      "Software Development",
+      "AI, ML, Deep Learning",
+      "GenAI & Agentic AI",
+      "Quantum Computing",
+      "Quantum Machine Learning",
+      "Space Biotechnology",
+      "Automation & Containerization",
+      "SaaS, IaaS",
+      "Future Guidance",
+      "Publication Help",
+      "Other: Mention in Additional Details"
+    ],
+    charges: {
+      india: { bachelor: 100, masters: 250, phd: 500, professional: 500, others: 100 },
+      foreign: { bachelor: 1000, masters: 2500, phd: 5000, professional: 5000, others: 1000 }
+    }
+  },
+  ngs: {
+    topics: [
+      "Transcriptomics /RNA-Seq (de novo, ref based, time based, spatial, single cell, bulk, total, single-nucleus)",
+      "Genomics (WGS, WES)",
+      "Small RNA (hashtag miRNA)",
+      "Long non coding RNAs",
+      "Epigenetics influence",
+      "Personalized Medicine",
+      "Proteomics",
+      "Metabolomics",
+      "Sequencing Platforms Data Analysis Support: Illumina, IonTorrent, Thermo, PackBio, Nanopore",
+      "Molecular Docking and Dynamic simulations",
+      "IVF: NIPT, PGT",
+      "Genetic Testing: Chromosomal aberrations (In-Del, Translocations, Inversions, duplication, ring, Isochromosomes)",
+      "Other: Mention in Additional Details"
+    ],
+    charges: {
+      india: { bachelor: 100, masters: 250, phd: 500, professional: 500, others: 100 },
+      foreign: { bachelor: 1000, masters: 2500, phd: 5000, professional: 5000, others: 1000 }
+    }
+  },
+  internship: {
+    topics: [
+      "Overall Bioinformatics",
+      "NGS",
+      "Drug Discovery",
+      "Human Genetics",
+      "IVF: NIPT, PGT",
+      "Gut microbiome & #Metagenomics",
+      "Extended Reality",
+      "ChemoInformatics",
+      "NutrioInformatics",
+      "Biomedical Coding",
+      "Programming Languages: Python, Java, R, Perl, Shell Scripting",
+      "Database Development",
+      "Big data/High-throughput Analytics",
+      "Software Development",
+      "AI, ML, Deep Learning",
+      "GenAI & Agentic AI",
+      "Quantum Computing",
+      "Quantum Machine Learning",
+      "Space Biotechnology",
+      "Automation & Containerization",
+      "SaaS", "IaaS",
+      "Other: Mention in Additional Details"
+    ],
+    startDates: ["Dec/Jan", "April", "June/July", "October", "Other: Mention in Additional Details"],
+    fees: {
+      india: { bachelor: 2000, masters: 3000, phd: 4000, professional: 5000 },
+      foreign: { bachelor: 20000, masters: 30000, phd: 40000, professional: 50000 }
+    }
+  },
+  project: {
+    topics: [
+      "NGS",
+      "Drug Discovery",
+      "Human Genetics",
+      "IVF: NIPT, PGT",
+      "Gut microbiome & #Metagenomics",
+      "Personalized Medicine",
+      "Proteomics",
+      "Metabolomics",
+      "ChemoInformatics",
+      "NutrioInformatics",
+      "Geoinformatics",
+      "Biomedical Coding",
+      "Database Development",
+      "Big data/High-throughput Analytics",
+      "Software Development",
+      "AI, ML, Deep Learning",
+      "GenAI & Agentic AI",
+      "Quantum Computing",
+      "Quantum Machine Learning",
+      "Space Biotechnology",
+      "Automation & Containerization", 
+      "Deployment: AWS, Azure, PBS",
+      "SaaS",
+      "IaaS",
+      "Extended Reality",
+      "Other: Mention in Additional Details"],
+    fees: {
+      india: 15000,
+      foreign: 30000
+    }
+  }
+};
+category.addEventListener("change", e => {
+  const value = e.target.value;
+  dynamic.innerHTML = "";
+  document.getElementById("topics-section").innerHTML = "";
+  document.getElementById("internship-section").innerHTML = "";
+  document.getElementById("consultancy-section").innerHTML = "";
+  document.getElementById("project-section").innerHTML = "";
+
+  if (!value) return;
+
+  const details = categoryDetails[value];
+
+  if(details.topics){
+    const topicsHTML = `<label>Select your Topic of Interest</label>
+      <select name="topic" required>
+        <option value="">-- Select Topic --</option>
+        ${details.topics.map(t => `<option value="${t}">${t}</option>`).join("")}
+      </select>`;
+    document.getElementById("topics-section").innerHTML = topicsHTML;
+  }
+
+  if(details.startDates){
+    const startDatesHTML = `<label>Starting Date for Internship / Dissertation</label>
+      <select name="start_date" required>
+        <option value="">-- Select Start Date --</option>
+        ${details.startDates.map(d => `<option value="${d}">${d}</option>`).join("")}
+      </select>`;
+    
+    const countryHTML = `<label>Country</label>
+      <input type="text" name="country" id="country" placeholder="Enter your country">`;
+
+    const degreeHTML = `<label>Degree / Level</label>
+      <select name="degree" id="degree" required>
+        <option value="">-- Select Degree --</option>
+        <option value="bachelor">Bachelor</option>
+        <option value="masters">Masters</option>
+        <option value="phd">PhD</option>
+        <option value="professional">Professional</option>
+      </select>`;
+
+    const feeHTML = `<label>Calculated Fees</label>
+      <input type="text" name="calculated_fee" id="calculated_fee" readonly>`;
+
+    document.getElementById("internship-section").innerHTML = startDatesHTML + countryHTML + degreeHTML + feeHTML;
+
+    const countryInput = document.getElementById("country");
+    const degreeInput = document.getElementById("degree");
+    const feeInput = document.getElementById("calculated_fee");
+
+    function updateFee(){
+      const country = countryInput.value.trim().toLowerCase();
+      const degree = degreeInput.value;
+      if(!degree) { feeInput.value = ""; return; }
+      const isIndia = country === "india";
+      const fees = isIndia ? details.fees.india[degree] : details.fees.foreign[degree];
+      feeInput.value = `$${fees}`;
+    }
+
+    countryInput.addEventListener("input", updateFee);
+    degreeInput.addEventListener("change", updateFee);
+  }
+
+  if(value === "project" && details.fees){
+    const countryHTML = `<label>Country</label>
+      <input type="text" name="project_country" id="project_country" placeholder="Enter your country">`;
+    const feeHTML = `<label>Project Fee</label>
+      <input type="text" name="project_fee" id="project_fee" readonly>`;
+    
+    document.getElementById("project-section").innerHTML = countryHTML + feeHTML;
+
+    const countryInput = document.getElementById("project_country");
+    const feeInput = document.getElementById("project_fee");
+
+    countryInput.addEventListener("input", () => {
+      const country = countryInput.value.trim().toLowerCase();
+      const isIndia = country === "india";
+      const fee = isIndia ? details.fees.india : details.fees.foreign;
+      feeInput.value = `$${fee}`;
+    });
+  }
+});
+</script>
+</body>
+</html>
