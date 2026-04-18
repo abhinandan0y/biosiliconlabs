@@ -46,7 +46,6 @@ h1 {
 /* ── Pamphlet root — 3 panels side by side ── */
 .pamphlet {
   width: min(95vw, 1400px);
-  aspect-ratio: var(--ratio, 3/1.6);
   height: auto;
   max-width: 1400px;   /* optional cap */
   max-height: 800px;   /* keeps proportions nice */
@@ -296,7 +295,6 @@ let state = 'closed';
 let flipped = false;
 
 const statuses = {
-  closed: 'Closed — front cover facing up',
   half:   'Opening — right panel unfolding…',
   open:   'Fully open — inside view. Flip to see outside.',
   flipped:'Flipped — outside view.',
