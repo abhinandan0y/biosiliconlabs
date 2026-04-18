@@ -145,6 +145,23 @@ button:disabled { opacity: 0.3; cursor: default; }
   color:#7ecfff; font-size:2rem; cursor:pointer;
   background:none; border:none; line-height:1;
 }
+@media (max-width: 768px) {
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 🔥 vertical center */
+    align-items: center;
+  }
+
+  .scene {
+    padding: 0;
+  }
+
+  .controls-wrap {
+    padding-bottom: 0;
+  }
+}
 </style>
 </head>
 <body>
@@ -188,6 +205,9 @@ button:disabled { opacity: 0.3; cursor: default; }
     <button id="btn-close" onclick="setState('closed')">⬛ Close</button>
     <button id="btn-open"  onclick="openStep()">▶ Open</button>
     <button id="btn-flip"  onclick="toggleFlip()" disabled>⟳ Flip</button>
+<a href="https://raw.githubusercontent.com/abhinandan0y/biosiliconlabs/refs/heads/main/docs/Bio-Silicon_Labs-Pamphlet.pdf" target="_blank">
+  <button style="font-weight:600;">PDF</button>
+</a>
   </div>
   <div class="status" id="status">Closed — right panel on top (front cover)</div>
 </div>
