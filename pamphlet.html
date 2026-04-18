@@ -3,79 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bio-Silicon Labs – Interactive Trifold</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 
 html, body {
-  margin: 0;
-  padding: 0;
   width: 100%;
-  height: 100%;
-  overflow: hidden; /* 👈 important */
   background: #0d1117;
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Center but use full screen */
 body {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
-/* Scene now fills screen */
 .scene {
-  flex: 1;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
   perspective: 2000px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px 16px 16px;
 }
 
-h1 {
-  color: #7ecfff;
-  font-size: 1rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  text-align: center;
-  opacity: 0.75;
-}
-
-/* ── Pamphlet root — 3 panels side by side ── */
 .pamphlet {
   width: min(95vw, 1400px);
-  height: auto;
-  max-width: 1400px;   /* optional cap */
-  max-height: 800px;   /* keeps proportions nice */
-  aspect-ratio: 3 / 1.6; /* 👈 KEY for trifold */
+  aspect-ratio: 3 / 1.6;
   position: relative;
   transform-style: preserve-3d;
 }
 
-/* Each panel is 1/3 wide, full height */
 .panel {
   position: absolute;
   top: 0;
   width: 33.333%;
   height: 100%;
   transform-style: preserve-3d;
-  transform-origin: left center;
 }
-
-/* 
-  Panel layout (outside view, closed = right panel on top):
-  #panel-left  : left third  (back cover / services)
-  #panel-mid   : middle third (spine / center art)
-  #panel-right : right third  (FRONT COVER — top when closed)
-*/
 
 #panel-left  { left: 0;      transform-origin: right center; }
 #panel-mid   { left: 33.333%; }
 #panel-right { left: 66.666%; transform-origin: left center; }
 
-/* Each panel has a front face and a back face */
 .face {
   position: absolute;
   inset: 0;
@@ -86,16 +57,11 @@ h1 {
 .face img {
   width: 100%;
   height: 100%;
-  /* object-fit: cover;   👈 key change */
   object-position: center;
-  background: #000; 
+  background: #000;
 }
+.face.back { transform: rotateY(180deg); }
 
-.face.back {
-  transform: rotateY(180deg);
-}
-
-/* Fold-line shadow overlays */
 .face::after {
   content: '';
   position: absolute;
@@ -105,77 +71,41 @@ h1 {
   pointer-events: none;
 }
 .face.back::after {
-  right: auto;
-  left: 0;
+  right: auto; left: 0;
   background: linear-gradient(to left, transparent, rgba(0,0,0,0.25));
 }
 
-/* ────────────────────────────────────────────
-   STATES
-   closed   → right panel covers everything (folded in)
-   half     → right panel opened 180°, left still closed
-   open     → all panels flat / fully open
-   flipped  → entire pamphlet flipped (show outside back)
-──────────────────────────────────────────── */
+.state-closed #panel-right { transform: rotateY(-180deg); z-index: 10; }
+.state-closed #panel-left  { transform: rotateY(180deg);  z-index: 5;  }
+.state-closed #panel-mid   { z-index: 1; }
 
-/* CLOSED: right panel folded over middle (sits on top) */
-.state-closed #panel-right {
-  transform: rotateY(-180deg);
-  z-index: 10;
-}
-.state-closed #panel-left {
-  transform: rotateY(180deg);
-  z-index: 5;
-}
-.state-closed #panel-mid {
-  z-index: 1;
-}
+.state-half #panel-right { transform: rotateY(0deg); z-index: 10; transition: transform 0.7s cubic-bezier(.4,0,.2,1); }
+.state-half #panel-left  { transform: rotateY(180deg); z-index: 5; }
+.state-half #panel-mid   { z-index: 1; }
 
-/* HALF: right panel opening */
-.state-half #panel-right {
-  transform: rotateY(0deg);
-  z-index: 10;
-  transition: transform 0.7s cubic-bezier(.4,0,.2,1);
-}
-.state-half #panel-left {
-  transform: rotateY(180deg);
-  z-index: 5;
-}
-.state-half #panel-mid {
-  z-index: 1;
+.state-open #panel-right { transform: rotateY(0deg); z-index: 3; }
+.state-open #panel-left  { transform: rotateY(0deg); z-index: 3; }
+.state-open #panel-mid   { z-index: 3; }
+
+.pamphlet, .panel { transition: transform 0.75s cubic-bezier(.4,0,.2,1); }
+
+/* Controls — normal flow, below the scene */
+.controls-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px 24px;
 }
 
-/* OPEN: all flat */
-.state-open #panel-right {
-  transform: rotateY(0deg);
-  z-index: 3;
-}
-.state-open #panel-left {
-  transform: rotateY(0deg);
-  z-index: 3;
-}
-.state-open #panel-mid {
-  z-index: 3;
-}
-
-/* FLIPPED: rotate whole pamphlet to show outside */
-.state-flipped .pamphlet {
-  transform: rotateY(180deg);
-}
-
-/* Transitions */
-.pamphlet, .panel {
-  transition: transform 0.75s cubic-bezier(.4,0,.2,1);
-}
-
-/* ── Controls ── */
 .controls {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
+
 button {
   background: rgba(126,207,255,0.08);
   border: 1px solid rgba(126,207,255,0.3);
@@ -187,21 +117,9 @@ button {
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
 }
-
-button:hover {
-  background: rgba(126,207,255,0.18);
-  border-color: rgba(126,207,255,0.6);
-}
-
-button.active {
-  background: rgba(126,207,255,0.25);
-  border-color: #7ecfff;
-}
-
-button:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
+button:hover { background: rgba(126,207,255,0.18); border-color: rgba(126,207,255,0.6); }
+button.active { background: rgba(126,207,255,0.25); border-color: #7ecfff; }
+button:disabled { opacity: 0.3; cursor: default; }
 
 .status {
   color: rgba(126,207,255,0.5);
@@ -212,7 +130,6 @@ button:disabled {
   min-height: 18px;
 }
 
-/* Lightbox */
 #lb {
   display: none;
   position: fixed;
@@ -228,63 +145,53 @@ button:disabled {
   color:#7ecfff; font-size:2rem; cursor:pointer;
   background:none; border:none; line-height:1;
 }
-
 </style>
 </head>
 <body>
+
 <div class="scene">
   <div class="pamphlet" id="pam" style="transform-style:preserve-3d;">
 
-    <!-- LEFT PANEL  (back cover / services page) -->
     <div class="panel" id="panel-left">
-      <!-- inside left -->
       <div class="face front">
         <img src="https://raw.githubusercontent.com/abhinandan0y/biosiliconlabs/refs/heads/main/images/panel_0_0.png">
       </div>
-
-      <!-- outside left -->
       <div class="face back">
         <img src="https://raw.githubusercontent.com/abhinandan0y/biosiliconlabs/refs/heads/main/images/panel_1_0.png">
       </div>
     </div>
 
-    <!-- MIDDLE PANEL (spine) -->
     <div class="panel" id="panel-mid">
-      <!-- inside middle -->
       <div class="face front">
         <img src="https://raw.githubusercontent.com/abhinandan0y/biosiliconlabs/refs/heads/main/images/panel_0_1.png">
       </div>
-
-      <!-- outside middle -->
       <div class="face back">
         <img src="https://raw.githubusercontent.com/abhinandan0y/biosiliconlabs/refs/heads/main/images/panel_1_1.png">
       </div>
     </div>
 
-    <!-- RIGHT PANEL (FRONT COVER — sits on top when closed) -->
-<div class="panel" id="panel-right">
-  <!-- INSIDE RIGHT -->
-<div class="face back">
-
-  <!-- FRAME (static pamphlet design) -->
- <img class="content" src="https://raw.githubusercontent.com/abhinandan0y/biosiliconlabs/refs/heads/main/images/panel_1_2.png">
-
-</div>
-     <div class="face front">
+    <div class="panel" id="panel-right">
+      <div class="face back">
+        <img class="content" src="https://raw.githubusercontent.com/abhinandan0y/biosiliconlabs/refs/heads/main/images/panel_1_2.png">
+      </div>
+      <div class="face front">
         <img src="https://raw.githubusercontent.com/abhinandan0y/biosiliconlabs/refs/heads/main/images/panel_0_2.png">
       </div>
+    </div>
+
+  </div>
 </div>
 
-
-<div class="controls">
-  <button id="btn-close"  onclick="setState('closed')">⬛ Close</button>
-  <button id="btn-open"   onclick="openStep()">▶ Open</button>
-  <button id="btn-flip"   onclick="toggleFlip()" disabled>⟳ Flip</button>
+<!-- Controls sit below the pamphlet in normal document flow -->
+<div class="controls-wrap">
+  <div class="controls">
+    <button id="btn-close" onclick="setState('closed')">⬛ Close</button>
+    <button id="btn-open"  onclick="openStep()">▶ Open</button>
+    <button id="btn-flip"  onclick="toggleFlip()" disabled>⟳ Flip</button>
+  </div>
+  <div class="status" id="status">Closed — right panel on top (front cover)</div>
 </div>
 
-<div class="status" id="status">Closed — right panel on top (front cover)</div>
-
-<!-- Lightbox -->
 <div id="lb" onclick="closeLb()">
   <button id="lb-x" onclick="closeLb()">✕</button>
 </div>
@@ -295,18 +202,15 @@ let state = 'closed';
 let flipped = false;
 
 const statuses = {
-  half:   'Opening — right panel unfolding…',
-  open:   'Fully open — inside view. Flip to see outside.',
-  flipped:'Flipped — outside view.',
+  half:    'Opening — right panel unfolding…',
+  open:    'Fully open — inside view. Flip to see outside.',
+  flipped: 'Flipped — outside view.',
+  closed:  'Closed — right panel on top (front cover)',
 };
 
 function setState(s) {
   state = s;
-  pam.className = '';
-  pam.classList.add('pamphlet');
-
-  const scene = document.querySelector('.pamphlet');
-  scene.style.transform = '';
+  pam.className = 'pamphlet';
 
   if (s === 'flipped') {
     pam.classList.add('state-open');
@@ -335,47 +239,22 @@ function openStep() {
 }
 
 function toggleFlip() {
-  if (flipped) {
-    setState('open');
-  } else {
-    setState('flipped');
-  }
+  flipped ? setState('open') : setState('flipped');
 }
 
-const panelImgs = {
-};
-
-function promptZoom() {
-  const options = Object.keys(panelImgs);
-  const choice = prompt('Which panel to zoom?\n' + options.map((o,i)=>(i+1)+'. '+o).join('\n') + '\nEnter number:');
-  const idx = parseInt(choice) - 1;
-  if (idx >= 0 && idx < options.length) {
-    openLb(panelImgs[options[idx]]);
-  }
-}
-
-function openLb(src) {
-  document.getElementById('lb').classList.add('on');
-}
-function closeLb() {
-  document.getElementById('lb').classList.remove('on');
-}
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeLb(); });
+function closeLb() { document.getElementById('lb').classList.remove('on'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 
 setState('closed');
-</script>
-<script>
-window.addEventListener("load", () => {
-  const img = document.querySelector('#panel-mid .face.front img'); // pick any panel
+
+window.addEventListener('load', () => {
+  const img = document.querySelector('#panel-mid .face.front img');
   if (!img) return;
-
-  const ratio = img.naturalWidth / img.naturalHeight;
-
-  // total pamphlet = 3 panels side by side
-  const totalRatio = ratio * 3;
-
-  document.querySelector('.pamphlet').style.aspectRatio = totalRatio;
+  img.addEventListener('load', () => {
+    const ratio = img.naturalWidth / img.naturalHeight;
+    document.querySelector('.pamphlet').style.aspectRatio = ratio * 3;
+  });
 });
 </script>
 </body>
-
+</html>
