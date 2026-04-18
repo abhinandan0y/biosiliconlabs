@@ -45,8 +45,9 @@ h1 {
 
 /* ── Pamphlet root — 3 panels side by side ── */
 .pamphlet {
-  width: 100vw;
-  height: 100vh;
+  width: min(95vw, 1400px);
+  aspect-ratio: var(--ratio, 3/1.6);
+  height: auto;
   max-width: 1400px;   /* optional cap */
   max-height: 800px;   /* keeps proportions nice */
   aspect-ratio: 3 / 1.6; /* 👈 KEY for trifold */
@@ -228,46 +229,7 @@ button:disabled {
   color:#7ecfff; font-size:2rem; cursor:pointer;
   background:none; border:none; line-height:1;
 }
-@media (max-width: 768px) {
 
-  .scene {
-    align-items: center;
-    justify-content: center;
-  }
-
-    .pamphlet {
-      width: min(95vw, 1400px);
-      aspect-ratio: var(--ratio, 3/1.6);
-      height: auto;
-    }
-
-  .panel {
-    width: 100%;
-    left: 0 !important;
-    position: absolute;
-  }
-
-  /* stack panels */
-  #panel-left  { transform: translateX(-100%); }
-  #panel-mid   { transform: translateX(0); }
-  #panel-right { transform: translateX(100%); }
-}
-@media (max-width: 768px) {
-  .panel {
-    transform: none !important;
-  }
-}
-@media (max-width: 768px) {
-  .controls {
-    bottom: 10px;
-    gap: 6px;
-  }
-
-  button {
-    padding: 8px 12px;
-    font-size: 0.7rem;
-  }
-}
 </style>
 </head>
 <body>
@@ -415,34 +377,6 @@ window.addEventListener("load", () => {
   const totalRatio = ratio * 3;
 
   document.querySelector('.pamphlet').style.aspectRatio = totalRatio;
-});
-</script>
-<script>
-let current = 1; // mid panel
-
-function showPanel(i) {
-  const panels = ['panel-left','panel-mid','panel-right'];
-
-  panels.forEach((id, idx) => {
-    const el = document.getElementById(id);
-    el.style.transform = `translateX(${(idx - i) * 100}%)`;
-  });
-
-  current = i;
-}
-
-/* touch swipe */
-let startX = 0;
-
-document.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-});
-
-document.addEventListener('touchend', e => {
-  const diff = e.changedTouches[0].clientX - startX;
-
-  if (diff > 50 && current > 0) showPanel(current - 1);
-  if (diff < -50 && current < 2) showPanel(current + 1);
 });
 </script>
 </body>
