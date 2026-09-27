@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp codebase="https://eprocure.gov.in/eprocure">
+	<information>
+		<title>e-Procurement</title>
+		<vendor>NIC</vendor>
+		<homepage>https://eprocure.gov.in/eprocure</homepage>
+		<description>e-Procurement Signing Application</description>
+	</information>
+	<security>
+		<all-permissions />
+	</security>
+	<resources>
+		<j2se version="1.6+" />
+		<jar href="KeyRegister.jar" main="true" />
+	</resources>
+	<application-desc main-class="gov.nic.keyupload.gui.KeyRegister">
+		<argument>aHR0cHM6Ly9lcHJvY3VyZS5nb3YuaW4vZXByb2N1cmUvam5scC1wcm9jZXNzb3Iv</argument>
+		<argument>ee2970df04fcfc8ae7bee631f48ceb23</argument>
+	</application-desc>
+</jnlp>
